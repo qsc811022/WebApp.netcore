@@ -46,6 +46,7 @@ namespace WebApplication17.Controllers
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
+                TempData["success"]="Category created successs fully";
                 return RedirectToAction("Index");
 
             }
@@ -84,6 +85,7 @@ namespace WebApplication17.Controllers
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category updated successs fully";
                 return RedirectToAction("Index");
 
             }
@@ -122,6 +124,7 @@ namespace WebApplication17.Controllers
             }
             _db.Categories.Remove(obj);
             _db.SaveChanges();
+            TempData["success"] = "Category delete successs fully";
             return RedirectToAction("Index");
         }
 
