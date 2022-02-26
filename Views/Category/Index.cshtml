@@ -26,7 +26,11 @@
             <th>
                 Display Order
             </th>
+            <th>
+
+            </th>
         </tr>
+
     </thead>
     <tbody>
         @foreach (var item in Model)
@@ -37,6 +41,10 @@
                 </td>
                 <td>
                     @item.DisplayOrder
+                </td>
+
+                <td>
+                    <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                 </td>
             </tr>
         }
