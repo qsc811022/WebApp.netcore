@@ -72,6 +72,24 @@ namespace WebApplication17.Controllers
 
             return View(categoryFromDb);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Category obj)
+        {
+            if (obj.Name == obj.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("CustomError", "The DisplayOrder cannot exactly match the Name");
+            }
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+
+            return View(obj);
+        }
 
 
     }
