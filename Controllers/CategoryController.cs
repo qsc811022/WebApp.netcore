@@ -6,14 +6,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tedliu.DataAccess;
 using WebApplication17.Models;
+using Tedliu.DataAccess.Repository;
 
 namespace WebApplication17.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly  ICategoryRepository _db;
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(ICategoryRepository db)
         {
             _db=db;
         }
@@ -22,7 +23,7 @@ namespace WebApplication17.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Category> result = _db.Categories.ToList();
+            IEnumerable<Category> result = _db.GetAll();
             return View(result);
         }
 
@@ -44,8 +45,8 @@ namespace WebApplication17.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _db.Add(obj);
+                _db.Save();
                 TempData["success"]="Category created successs fully";
                 return RedirectToAction("Index");
 
@@ -61,17 +62,17 @@ namespace WebApplication17.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDb = _db.Categories.Find(id);
-            //var catgoryFromDbFirst = _db.Categories.FirstOrDefault(u=>u.Id==id);
+            //var categoryFromDb = _db.Categories.Find(id);
+            var catgoryFromDbFirst = _db.GetFirstOrDefault(u => u.Name == "id");
             //var catgoryFromDbSingle = _db.Categories.SingleOrDefault(u => u.Id == id);
 
-            if (categoryFromDb ==null)
+            if (catgoryFromDbFirst == null)
             {
                 return NotFound();
             }
 
 
-            return View(categoryFromDb);
+            return View(catgoryFromDbFirst);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -83,8 +84,8 @@ namespace WebApplication17.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _db.Update(obj);
+                _db.Save();
                 TempData["success"] = "Category updated successs fully";
                 return RedirectToAction("Index");
 
@@ -100,30 +101,30 @@ namespace WebApplication17.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDb = _db.Categories.Find(id);
-            //var catgoryFromDbFirst = _db.Categories.FirstOrDefault(u=>u.Id==id);
+            //var categoryFromDb = _db.Categories.Find(id);
+            var catgoryFromDbFirst = _db.GetFirstOrDefault(u => u.Id == id);
             //var catgoryFromDbSingle = _db.Categories.SingleOrDefault(u => u.Id == id);
 
-            if (categoryFromDb == null)
+            if (catgoryFromDbFirst == null)
             {
                 return NotFound();
             }
 
 
-            return View(categoryFromDb);
+            return View(catgoryFromDbFirst);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _db.Categories.Find(id);
+            var obj = _db.GetFirstOrDefault(u=>u.Id==id);
 
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            _db.Categories.Remove(obj);
-            _db.SaveChanges();
+            _db.Remove(obj);
+            _db.Save();
             TempData["success"] = "Category delete successs fully";
             return RedirectToAction("Index");
         }
