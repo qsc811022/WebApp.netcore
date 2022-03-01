@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Tedliu.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Tedliu.DataAccess.Repository;
+using Tedliu.DataAccess.Repository.IRepositoryS;
 
 namespace WebApplication17
 {
@@ -30,7 +31,7 @@ namespace WebApplication17
             services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")
                 ));
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
           
         }
 
