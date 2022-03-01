@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication17.Data;
+using Tedliu.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication17

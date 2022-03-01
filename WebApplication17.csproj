@@ -15,4 +15,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tedliu.DataAccess\Tedliu.DataAccess.csproj" />
+    <ProjectReference Include="..\Tedliu.Models\Tedliu.Models.csproj" />
+    <ProjectReference Include="..\Tedliu.Utility\Tedliu.Utility.csproj" />
+  </ItemGroup>
+
 </Project>
